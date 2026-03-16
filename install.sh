@@ -80,15 +80,17 @@ update_system() {
 # configure profile
 configure_profile() {
 	log_info "Configuring Profile..."
-cat > /root/.profile <<-EOF
-if [ "\$BASH" ]; then
+cat> /root/.profile << END
+# ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
   if [ -f ~/.bashrc ]; then
     . ~/.bashrc
   fi
 fi
+mesg n || true
 clear
 menu
-EOF
+END
 chmod 644 /root/.profile
     log_success "profile updated."
 }
