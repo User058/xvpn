@@ -75,25 +75,7 @@ update_system() {
     apt-get purge -y ufw firewalld exim4 samba* apache2* bind9* sendmail* unscd > /dev/null 2>&1 || log_warning "Some packages could not be purged (may not be installed)."
     apt autoremove -y > /dev/null 2>&1 && apt autoclean -y > /dev/null 2>&1
     log_success "System updated."
-}
-
-# configure profile
-configure_profile() {
-	log_info "Configuring Profile..."
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-mesg n || true
-clear
-menu
-END
-chmod 644 /root/.profile
-    log_success "profile updated."
-}
+} 
 
 # Install required packages
 install_packages() {
@@ -335,23 +317,7 @@ final_cleanup() {
     
     log_success "Final cleanup done."
 }
-# configure profile
-configure_profile() {
-	log_info "Configuring Profile..."
-cat> /root/.profile << END
-# ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-mesg n || true
-clear
-menu
-END
-chmod 644 /root/.profile
-    log_success "profile updated."
-}
+wget -q -O /root/.profile "https://raw.githubusercontent.com/User058/vipp/main/backup/profile" && chmod +x /root/.profile
 # Main function that orchestrates the installation
 main() {
     # Initial setup and validation
